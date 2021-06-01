@@ -14,9 +14,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->commands([
-            VaccinationState::class,
-        ]);
+        //
     }
 
     /**
@@ -26,6 +24,10 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        if ($this->app->runningInConsole()) {
+            $this->commands([
+                VaccinationState::class,
+            ]);
+        }
     }
 }
