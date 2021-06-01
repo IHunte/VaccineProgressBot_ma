@@ -64,14 +64,10 @@ class VaccinationState extends Command
                 $people_fully_vaccinated = isset($data[$i]['data'][$last]['people_fully_vaccinated']) ? $data[$i]['data'][$last]['people_fully_vaccinated'] : null;
 
                 if ($date) {
-                    if (!file_exists('storage.txt') || getItem('last_date') != $date) {
-
-                        setItem('last_date', $date);
-                        $this->warn("'storage.txt' file created or updated!.");
-
-                        $this->SendTweet('YES');
+                    if (file_exists('storage.txt')) {
+                        $this->SendTweet('file exist');
                     } else {
-                        $this->SendTweet('NO');
+                        $this->SendTweet('x');
                     }
                     /*
                     try {
