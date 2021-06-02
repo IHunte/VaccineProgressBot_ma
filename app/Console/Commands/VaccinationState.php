@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Carbon\Carbon;
+use App\Models\Data;
 use Illuminate\Console\Command;
 use Atymic\Twitter\Facade\Twitter;
 use Illuminate\Support\Facades\Http;
@@ -64,11 +65,12 @@ class VaccinationState extends Command
                 $people_fully_vaccinated = isset($data[$i]['data'][$last]['people_fully_vaccinated']) ? $data[$i]['data'][$last]['people_fully_vaccinated'] : null;
 
                 if ($date) {
-                    if (file_exists('storage.txt')) {
-                        $this->SendTweet('file exist');
+                    if (Data::where('id', 1)->exists()) {
+                        $this->SendTweet('YES');
                     } else {
-                        $this->SendTweet('x');
+                        $this->SendTweet('NO');
                     }
+
                     /*
                     try {
                         $this->SendTweet('Testing in Prod');
