@@ -54,7 +54,6 @@ class VaccinationState extends Command
         $data = $response->json();
 
         for ($i = 0; $i <= count($data) - 1; $i++) {
-
             if ($data[$i]['country'] == constants('COUNTRY')) {
                 $last = count($data[$i]['data']) - 1;
 
@@ -65,9 +64,25 @@ class VaccinationState extends Command
                 $people_fully_vaccinated = isset($data[$i]['data'][$last]['people_fully_vaccinated']) ? $data[$i]['data'][$last]['people_fully_vaccinated'] : null;
 
                 if ($date) {
+                    $formated_date = Carbon::createFromFormat('Y-m-d', $date)->format('d/m/Y');
+
                     if (Data::where('id', 1)->exists() && Data::where("id", "=", 1)->where('value', '!=', $date)->first()) {
 
                         Data::where('id', 1)->update(['value' => $date]);
+
+                        if ($daily_vaccinations && !$total_vaccinations && !$people_vaccinated && !$people_fully_vaccinated) {
+                            $this->SendTweet(constants('EMOTE.SYRINGE') . ' ' . $daily_vaccinations . ' people were vaccinated on ' . $formated_date);
+
+                            $this->warn("Tweet sent !.");
+                        } elseif ($daily_vaccinations && $total_vaccinations && $people_vaccinated && $people_fully_vaccinated) {
+                            $fv_percentage = $people_fully_vaccinated * 100 / constants('TARGET_POPULATION');
+
+                            $this->SendTweet(
+                                constants('EMOTE.SYRINGE') . " update of $formated_date :" . "\r\n" . "- $daily_vaccinations people were vaccinated. " . "\r\n" . "- Total number of vaccinations $total_vaccinations. " . "- $people_vaccinated people received their first dose." . "\r\n" . "- $people_fully_vaccinated people received the second dose." . "\r\n" . "\r\n" . "- Progression of people fully vaccinated :" . "\r\n" . ProgressBar($fv_percentage)
+                            );
+                        } else {
+                            $this->warn("❌ Did not find any attributes !.");
+                        }
                     } else {
                         $this->warn("🚫 Didn't find any new update !.");
                     }
