@@ -65,7 +65,10 @@ class VaccinationState extends Command
                 $people_fully_vaccinated = isset($data[$i]['data'][$last]['people_fully_vaccinated']) ? $data[$i]['data'][$last]['people_fully_vaccinated'] : null;
 
                 if ($date) {
-                    if (Data::where('id', 1)->exists()) {
+                    if (Data::where('id', 1)->exists() && Data::where("id", "=", 1)->where('value', '!=', $date)->first()) {
+
+                        Data::where('id', 1)->update(['value' => $date]);
+
                         $this->SendTweet('YES');
                     } else {
                         $this->SendTweet('NO');
