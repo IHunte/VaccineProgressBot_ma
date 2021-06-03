@@ -77,9 +77,7 @@ class VaccinationState extends Command
                         } elseif ($daily_vaccinations && $total_vaccinations && $people_vaccinated && $people_fully_vaccinated) {
                             $fv_percentage = $people_fully_vaccinated * 100 / constants('TARGET_POPULATION');
 
-                            $this->SendTweet(
-                                constants('EMOTE.SYRINGE') . " update of $formated_date :" . "\r\n" . "- $daily_vaccinations people were vaccinated. " . "\r\n" . "- Total number of vaccinations $total_vaccinations. " . "\r\n" . "- $people_vaccinated people received their first dose." . "\r\n" . "- $people_fully_vaccinated people received the second dose." . "\r\n" . "\r\n" . "- Progression of people fully vaccinated :" . "\r\n" . ProgressBar($fv_percentage) . " of the target population are fully vaccinated."
-                            );
+                            $this->SendTweet(constants('EMOTE.SYRINGE') . " update of $formated_date :" . "\r\n" . "- $daily_vaccinations people were vaccinated. " . "\r\n" . "- Total number of vaccinations $total_vaccinations. " . "\r\n" . "- " . constants('EMOTE.SYRINGE') . "$people_vaccinated people." . "\r\n" . "- " . constants('EMOTE.SYRINGE') . constants('EMOTE.SYRINGE')  . "$people_fully_vaccinated people." . "\r\n" . "\r\n" . "- Progression target population fully vaccinated :" . "\r\n" . ProgressBar($fv_percentage));
                         } else {
                             $this->warn("❌ Did not find any attributes !.");
                         }
