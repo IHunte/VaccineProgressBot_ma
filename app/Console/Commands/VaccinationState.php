@@ -78,7 +78,7 @@ class VaccinationState extends Command
                             $fv_percentage = $people_fully_vaccinated * 100 / constants('TARGET_POPULATION');
 
                             $this->SendTweet(
-                                constants('EMOTE.SYRINGE') . " update of $formated_date :" . "\r\n" . "- $daily_vaccinations people were vaccinated. " . "\r\n" . "- Total number of vaccinations $total_vaccinations. " . "- $people_vaccinated people received their first dose." . "\r\n" . "- $people_fully_vaccinated people received the second dose." . "\r\n" . "\r\n" . "- Progression of people fully vaccinated :" . "\r\n" . ProgressBar($fv_percentage)
+                                constants('EMOTE.SYRINGE') . " update of $formated_date :" . "\r\n" . "- $daily_vaccinations people were vaccinated. " . "\r\n" . "- Total number of vaccinations $total_vaccinations. " . "\r\n" . "- $people_vaccinated people received their first dose." . "\r\n" . "- $people_fully_vaccinated people received the second dose." . "\r\n" . "\r\n" . "- Progression of people fully vaccinated :" . "\r\n" . ProgressBar($fv_percentage) . " of the target population are fully vaccinated."
                             );
                         } else {
                             $this->warn("❌ Did not find any attributes !.");
