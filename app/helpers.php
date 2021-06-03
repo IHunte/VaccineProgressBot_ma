@@ -29,39 +29,6 @@ if (!function_exists("ProgressBar")) {
     }
 }
 
-if (!function_exists("setItem")) {
-    function setItem($key, $value)
-    {
-        $store_data = [
-            $key => $value
-        ];
-
-        $storage = json_encode($store_data);
-
-        file_put_contents('storage.txt', $storage);
-    }
-}
-
-if (!function_exists("getItem")) {
-    function getItem($value)
-    {
-        if (file_exists('storage.txt')) {
-            $Settings = file_get_contents('storage.txt');
-            $json = json_decode($Settings);
-            return $json->$value;
-        }
-
-        return "'storage.txt' file doesn't exist";
-    }
-}
-
-if (!function_exists("clearItem")) {
-    function clearItem()
-    {
-        unlink('storage.txt');
-    }
-}
-
 if (!function_exists("constants")) {
     function constants($key)
     {

@@ -68,21 +68,11 @@ class VaccinationState extends Command
                     if (Data::where('id', 1)->exists() && Data::where("id", "=", 1)->where('value', '!=', $date)->first()) {
 
                         Data::where('id', 1)->update(['value' => $date]);
-
-                        $this->SendTweet('YES');
                     } else {
-                        $this->SendTweet('NO');
+                        $this->warn("🚫 Didn't find any new update !.");
                     }
-
-                    /*
-                    try {
-                        $this->SendTweet('Testing in Prod');
-                    } catch (\Exception $e) {
-                        $this->warn('Exception : ' . ' ' . $e->getMessage());
-                    }
-                    */
                 } else {
-                    $this->warn("❌ Did not find date attribute !.");
+                    $this->warn("❌ Did not find {date} attribute !.");
                 }
             }
         }
