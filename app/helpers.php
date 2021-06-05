@@ -35,3 +35,11 @@ if (!function_exists("constants")) {
         return config('constants.' . $key);
     }
 }
+
+//https://www.php.net/manual/fr/function.number-format.php
+if (!function_exists("nbr_f")) {
+    function nbr_f($nbr)
+    {
+        return number_format($nbr, 0, ',', ' ');
+    }
+}

@@ -71,13 +71,17 @@ class VaccinationState extends Command
                         Data::where('id', 1)->update(['value' => $date]);
 
                         if ($daily_vaccinations && !$total_vaccinations && !$people_vaccinated && !$people_fully_vaccinated) {
-                            $this->SendTweet(constants('EMOTE.SYRINGE') . ' ' . $daily_vaccinations . ' people were vaccinated on ' . $formated_date);
+                            $this->SendTweet(constants('EMOTE.SYRINGE') . ' ' . nbr_f($daily_vaccinations) . ' people were vaccinated on ' . $formated_date);
 
                             $this->warn("Tweet sent !.");
                         } elseif ($daily_vaccinations && $total_vaccinations && $people_vaccinated && $people_fully_vaccinated) {
                             $fv_percentage = $people_fully_vaccinated * 100 / constants('TARGET_POPULATION');
+                            $nbf_daily_vaccinations = nbr_f($daily_vaccinations);
+                            $nbf_total_vaccinations = nbr_f($total_vaccinations);
+                            $nbf_people_vaccinated = nbr_f($people_vaccinated);
+                            $nbf_people_fully_vaccinated = nbr_f($people_fully_vaccinated);
 
-                            $this->SendTweet(constants('EMOTE.SYRINGE') . " update of $formated_date :" . "\r\n" . "- $daily_vaccinations people were vaccinated. " . "\r\n" . "- Total number of vaccinations $total_vaccinations. " . "\r\n" . "- " . constants('EMOTE.SYRINGE') . "$people_vaccinated people." . "\r\n" . "- " . constants('EMOTE.SYRINGE') . constants('EMOTE.SYRINGE')  . "$people_fully_vaccinated people." . "\r\n" . "\r\n" . "- Progression target population fully vaccinated :" . "\r\n" . ProgressBar($fv_percentage));
+                            $this->SendTweet(constants('EMOTE.SYRINGE') . " update of $formated_date :" . "\r\n" . "- $nbf_daily_vaccinations people were vaccinated. " . "\r\n" . "- Total number of vaccinations $nbf_total_vaccinations. " . "\r\n" . "- " . constants('EMOTE.SYRINGE') . "$nbf_people_vaccinated people." . "\r\n" . "- " . constants('EMOTE.SYRINGE') . constants('EMOTE.SYRINGE')  . "$nbf_people_fully_vaccinated people." . "\r\n" . "\r\n" . "- Progression target population fully vaccinated :" . "\r\n" . ProgressBar($fv_percentage));
                         } else {
                             $this->warn("❌ Did not find any attributes !.");
                         }
